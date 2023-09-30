@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
-
 # Initialize a counter
-count=1
+# On 9th iteration dispaly hi before Best school
 
-# Use a while loop to display "Best School" 10 times
-while [ $count -le 10 ]; do
-  if [ $count -eq 9 ]; then
-    echo -n "Best School"
-    echo " Hi"
-  else
-    echo "Best School"
+count=0
+
+
+while [ $count -lt 10 ]
+do
+  if [ $count -eq 9 ]
+  then
+    echo -n "Hi"
   fi
-  ((count++))
+    echo "Best School"
+    ((count++))
 done
