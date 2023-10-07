@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-
 # Get a list of listening sockets and their associated processes
+
 netstat -tuln | awk '$6 == "LISTEN" {print $4}' | sed 's/.*://' | sort -n | uniq | while read -r port; do
     pid=$(lsof -i :$port -t 2>/dev/null)
     if [ -n "$pid" ]; then
