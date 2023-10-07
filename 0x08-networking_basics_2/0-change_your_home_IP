@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This script changes your home IP
+localhost_mapping="127.0.0.2 localhost"
+facebook_mapping="8.8.8.8 facebook.com"
+#append mappings to /etc/hosts file
+echo "$localhost_mapping" >> /etc/hosts
+echo "$facebook_mapping" >> /etc/hosts
