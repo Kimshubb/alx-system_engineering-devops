@@ -2,7 +2,7 @@
 
 # Check if the argument matches the regular expression
 def match_expression(argument)
-  regex = ^hb(t{1,4})n$
+  regex = /hbt({2,5})n/
   if argument.match?(regex)
     puts argument.scan(regex).join
   else
