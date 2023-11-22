@@ -4,10 +4,7 @@
 def match_school(argument)
   regex = /School/
   if argument.match?(regex)
-    puts argument.gsub(regex, 'School')
-  else
-    puts ''
-  end
+    puts argument.scan(regex).join
 end
 
 # Check if an argument is provided
