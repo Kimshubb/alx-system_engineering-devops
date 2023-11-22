@@ -4,9 +4,9 @@
 def match_school(argument)
   regex = /School/
   if argument.match?(regex)
-    puts argument.gsub(regex, 'School') + '$'
+    puts argument.gsub(regex, 'School')
   else
-    puts '$'
+    puts ''
   end
 end
 
