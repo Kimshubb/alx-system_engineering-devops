@@ -1,0 +1,3 @@
+#!/usr/bin/bash
+# create an RSA keyy pair
+ssh-keygen -b 4096 -f school -N betty
