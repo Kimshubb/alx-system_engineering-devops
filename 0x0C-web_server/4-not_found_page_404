@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Create a backup of the original Nginx configuration file
+cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
+
+# Use sed to modify the Nginx configuration file to include custom error page for 404
+sed -i '/server {/a \\t#error_page 404 \/404.html;\\n\\tlocation \/404.html {\\n\\t\\techo "Ceci n\'est pas une page";\\n\\t}' /etc/nginx/sites-available/default
+
+# Restart Nginx to apply the changes
+/etc/init.d/nginx restart
+
