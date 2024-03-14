@@ -1,23 +1,40 @@
 #!/usr/bin/env bash
-# Installs and setup haproxy
+# Install HAProxy
+sudo apt update
+sudo apt install haproxy
 
-apt-get install -y software-properties-common
-add-apt-repository -y ppa:vbernat/haproxy-1.8
-apt-get -y update
-apt-get install -y haproxy=1.8.\*
+# Configure HAProxy
+sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+sudo tee /etc/haproxy/haproxy.cfg >/dev/null <<EOF
+# HAProxy configuration
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    stats socket /run/haproxy/admin.sock mode 660 level admin
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
 
-echo "ENABLED=1" > /etc/default/haproxy
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
 
-# Listen to web1 and web2 servers                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-echo "
-   listen load_balancer
-   bind *:80
-   mode http
-   balance roundrobin
-   option httpclose
-   option forwardfor
-   server 190865-web-01 52.3.249.75:80 check
-   server 190865-web-02 100.25.183.18:80 check
-" >> /etc/haproxy/haproxy.cfg
+frontend http_front
+    bind *:80
+    default_backend http_back
 
-service haproxy start
+backend http_back
+    balance roundrobin
+    server [190865]-web-01 [web-01-54.175.1.126]:80 check
+    server [190865]-web-02 [web-02-3.83.253.4]:80 check
+EOF
+
+sudo systemctl restart haproxy
+
