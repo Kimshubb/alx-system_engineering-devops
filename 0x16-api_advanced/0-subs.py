@@ -25,7 +25,7 @@ def number_of_subscribers(subreddit):
     """
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
     headers = {
-        'User-Agent': 'Mozilla/5.0 (compatible; Python/3.8; +http://example.com)'
+        'User-Agent': 'python:my_reddit_app:v1.0 (by /u/Ok_Data_8641)'
     }
 
     try:
