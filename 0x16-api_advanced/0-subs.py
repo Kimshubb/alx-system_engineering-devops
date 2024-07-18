@@ -1,40 +1,17 @@
+/u/Ok_Data_8641
 #!/usr/bin/python3
-"""
-Module to query the Reddit API and return the number of subscribers for a given
-subreddit.
-
-Functions:
-- number_of_subscribers(subreddit): Returns the number of subscribers for a
-  given subreddit. Returns 0 if the subreddit is invalid.
-"""
-
+"""Function to query subscribers on a given Reddit subreddit."""
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """
-    Queries the Reddit API and returns the number of subscribers for a given
-    subreddit.
-
-    Args:
-        subreddit (str): The name of the subreddit to query.
-
-    Returns:
-        int: The number of subscribers for the subreddit, or 0 if the subreddit
-        is invalid.
-    """
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    """Return the total number of subscribers on a given subreddit."""
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
     headers = {
-        'User-Agent': 'python:my_reddit_app:v1.0 (by /u/Ok_Data_8641)'
+        "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/Ok_Data_8641)"
     }
-
-    try:
-        response = requests.get(url, headers=headers, allow_redirects=False)
-        if response.status_code == 200:
-            data = response.json()
-            return data['data']['subscribers']
-        else:
-            return 0
-    except requests.RequestException:
+    response = requests.get(url, headers=headers, allow_redirects=False)
+    if response.status_code == 404:
         return 0
-
+    results = response.json().get("data")
+    return results.get("subscribers")
